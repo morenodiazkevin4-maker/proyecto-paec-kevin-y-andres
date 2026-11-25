@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado del compromiso</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <h1>¡Gracias por participar!</h1>
+
+    <main id="resultado">
+        <p>Revisando tu compromiso...</p>
+    </main>
+
+    <p><a href="formulario.html">Volver al formulario</a></p>
+    <p><a href="index.html">Volver al inicio</a></p>
+
+    <script>
+        const datos = new URLSearchParams(window.location.search);
+        const resultado = document.getElementById("resultado");
+
+        function agregarLinea(etiqueta, valor) {
+            const p = document.createElement("p");
+            const negrita = document.createElement("b");
+            negrita.textContent = etiqueta + ": ";
+            p.appendChild(negrita);
+            p.appendChild(document.createTextNode(valor || "No indicado"));
+            resultado.appendChild(p);
+        }
+
+        const nombre = datos.get("nombre") || "";
+        const botellas = Math.max(0, Number(datos.get("botellas")) || 0);
+        const mes = botellas * 4;
+
+        resultado.innerHTML = "";
+        const saludo = document.createElement("p");
+        saludo.appendChild(document.createTextNode("Hola, "));
+        const nombreNegrita = document.createElement("b");
+        nombreNegrita.textContent = nombre;
+        saludo.appendChild(nombreNegrita);
+        saludo.appendChild(document.createTextNode(". Tu compromiso quedó registrado."));
+        resultado.appendChild(saludo);
+
+        agregarLinea("Edad", datos.get("edad"));
+        agregarLinea("Grupo", datos.get("grupo"));
+        agregarLinea("Residuo que generas más", datos.get("residuo"));
+        agregarLinea("¿Separas tus residuos?", datos.get("separa"));
+        agregarLinea("Acción que realizas", datos.get("accion"));
+        agregarLinea("Tu compromiso", datos.get("compromiso"));
+        agregarLinea("Comentario o propuesta", datos.get("comentario"));
+
+        const titulo = document.createElement("h2");
+        titulo.textContent = "Resultado del reto";
+        resultado.appendChild(titulo);
+
+        const reto = document.createElement("p");
+        reto.textContent = "Si evitas usar " + botellas +
+            " botellas por semana, en cuatro semanas podrías evitar aproximadamente " +
+            mes + " botellas.";
+        resultado.appendChild(reto);
+
+        const final = document.createElement("p");
+        final.textContent = "¡Cada acción cuenta para cuidar nuestro entorno!";
+        resultado.appendChild(final);
+    </script>
+
+</body>
+</html>
